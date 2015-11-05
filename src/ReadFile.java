@@ -17,7 +17,8 @@ public class ReadFile{
         
         String workingDir = System.getProperty("user.dir");
         System.out.println(workingDir);
-        Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\point.txt"));
+        //Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\point.txt"));
+        Scanner scan = new Scanner(new File("point.txt"));
         GraphType = scan.next().charAt(0);
         Connections = scan.nextInt();
         int[] nodex = new int[Connections];
