@@ -18,11 +18,11 @@ public class DeclanCiaranDijkstra {
     public static void main(String[]args)throws FileNotFoundException{
     	readFile();
         for(int j=0; j<Connections;j++){
-        System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
+        	System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
         }
 
 
-
+// ----------Do algorithm
 
          LinkedList<Node> list = new LinkedList<Node>();
 
@@ -68,15 +68,39 @@ public class DeclanCiaranDijkstra {
             NodeWeight = scan.nextInt();
             distance[i] = NodeWeight;
             i++;
-        }
+
+			// ---------Sort arrays
+			int[] check = new int[3];
+			for(int f = 1; f < Connections; f++)
+			{
+				if(TSP[f][0] < TSP[f-1][0])
+				{
+					check[0] = TSP[f][0];
+					check[1] = TSP[f][1];
+					check[2] = distance[f];
+
+					TSP[f][0] = TSP[f-1][0];
+					TSP[f][1] = TSP[f-1][1];
+					distance[f] = distance[f-1];
+
+					TSP[f-1][0] = check[0];
+					TSP[f-1][1] = check[1];
+					distance[f-1] = check[2];
+
+				}
+			}
+
+		}
 
         System.out.println(GraphType);
         System.out.println(Connections);
-        //for(int j=0; j<Connections;j++){
-        //System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
+       // for(int j=0; j<Connections;j++){
+       // System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
         //return new Node();
+		//}
+        // -----------------------It's algorithm time
 
-        // -----------------------It#s algorithm time
+
 
 
 	}

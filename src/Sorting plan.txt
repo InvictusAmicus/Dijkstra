@@ -1,0 +1,8 @@
+for(int i = 0...)
+{
+sort first array, second array, third array by first array
+}
+for(int j = 0...)
+{
+sort arrays by second array while j = j+1 in first array
+}
