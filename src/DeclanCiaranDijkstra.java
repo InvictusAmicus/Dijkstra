@@ -48,7 +48,7 @@ public class DeclanCiaranDijkstra {
         String workingDir = System.getProperty("user.dir");
         System.out.println(workingDir);
         //Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\DensePoints.txt"));
-        Scanner scan = new Scanner(new File("DensePoints.txt"));
+        Scanner scan = new Scanner(new File("Points.txt"));
         GraphType = scan.next().charAt(0);
         Connections = scan.nextInt();
         //int[] nodex = new int[Connections];
@@ -69,8 +69,20 @@ public class DeclanCiaranDijkstra {
             distance[i] = NodeWeight;
             i++;
 
-			// ---------Sort arrays
-			int[] check = new int[3];
+
+
+		}
+
+        System.out.println(GraphType);
+        System.out.println(Connections);
+       // for(int j=0; j<Connections;j++){
+       // System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
+        //return new Node();
+		//}
+		// ---------Sort arrays
+		int[] check = new int[3];
+		for(int e = 0; e < Connections; e++)
+		{
 			for(int f = 1; f < Connections; f++)
 			{
 				if(TSP[f][0] < TSP[f-1][0])
@@ -87,22 +99,9 @@ public class DeclanCiaranDijkstra {
 					TSP[f-1][1] = check[1];
 					distance[f-1] = check[2];
 
-				}
-			}
-
+				} // end of if
+			} // end of for
 		}
+	} // end of readfile
 
-        System.out.println(GraphType);
-        System.out.println(Connections);
-       // for(int j=0; j<Connections;j++){
-       // System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
-        //return new Node();
-		//}
-        // -----------------------It's algorithm time
-
-
-
-
-	}
-
-}
+} // end of class
