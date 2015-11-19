@@ -39,6 +39,10 @@ public class FileMaker {
 						}
 					}
 				}
+				else if(x == node2[j] && y == node1[j])
+				{
+					ignore = true;
+				}
 
 			}
 			if(!ignore) {
@@ -50,7 +54,8 @@ public class FileMaker {
 
 		}
 
-		for(int i = 0; i<n; i++) {
+		for(int i = 0; i<n; i++)
+		{
 			pw.println(node1[i] + " " + node2[i]+ " " + distance[i] + " ");
 		}
 
