@@ -78,10 +78,16 @@ public class DeclanCiaranDijkstra {
         //Scanner scan = new Scanner(new File("Points.txt"));
 
         String workingDir = System.getProperty("user.dir");
+<<<<<<< HEAD
         //System.out.println(workingDir);
         Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\Points.txt"));
         //Scanner scan = new Scanner(new File("Points.txt"));
         //Scanner scan = new Scanner(new In("Points.txt"));
+=======
+        System.out.println(workingDir);
+        //Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\DensePoints.txt"));
+        Scanner scan = new Scanner(new File("Points.txt"));
+>>>>>>> origin/master
         GraphType = scan.next().charAt(0);
         Connections = scan.nextInt();
         //int[] nodex = new int[Connections];
@@ -101,9 +107,17 @@ public class DeclanCiaranDijkstra {
             NodeWeight = scan.nextInt();
             distance[i] = NodeWeight;
             i++;
+<<<<<<< HEAD
 
 		}
 
+=======
+
+
+
+		}
+
+>>>>>>> origin/master
         System.out.println(GraphType);
         System.out.println(Connections);
        // for(int j=0; j<Connections;j++){
@@ -131,6 +145,7 @@ public class DeclanCiaranDijkstra {
 					distance[f-1] = check[2];
 
 				} // end of if
+<<<<<<< HEAD
                                 
 			} // end of for
 		}
@@ -142,3 +157,10 @@ public class DeclanCiaranDijkstra {
 	} // end of readfile
 
 } // end of class
+=======
+			} // end of for
+		}
+	} // end of readfile
+
+} // end of class
+>>>>>>> origin/master
