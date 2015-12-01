@@ -14,13 +14,14 @@ public class DeclanCiaranDijkstra {
     static int TSP[][];
     static char GraphType;
     static int Connections;
-
+    Bag<Node>[] adj;
+    static IndexMinPQ<Double> pq;
 
 
     public static void main(String[]args)throws FileNotFoundException{
     	
         
-        Bag<DirectedEdge>[] adj;
+        
         
         readFile();
         for(int j=0; j<Connections;j++){
@@ -41,20 +42,20 @@ public class DeclanCiaranDijkstra {
 
          LinkedList<Node> list = new LinkedList<Node>();
          int count = 0;
-		        Node[] nodeArray = new Node[Connections];
-		        for(int k = 0; k < Connections; k++)
-		        {
-					nodeArray[k] = new Node(TSP[k][0],TSP[k][1],distance[k]);
+        */
+        Node[] nodeArray = new Node[Connections];
+        for(int k = 0; k < Connections; k++){
+	    nodeArray[k] = new Node(TSP[k][0],TSP[k][1],distance[k]);
                                         
-					list.add(nodeArray[k]);
-                                        count++;
-				}
+	    //list.add(nodeArray[k]);
+            //count++;
+	}
 
-				System.out.println(list);
+				//System.out.println(list);
                                 //System.out.println("count is "+count);
                                 //System.out.println("connections is "+Connections);
         
-        */                 
+        //*/                 
         //Start algorithm
         distTo = new double[Connections];
         edgeTo = new Node[Connections];
@@ -65,9 +66,34 @@ public class DeclanCiaranDijkstra {
         distTo[TSP[0][0]-1] = 0.0;
         System.out.print("Test "+distTo[TSP[0][0]-1]);
         
+        pq = new IndexMinPQ<Double>(Connections);
+        pq.insert(TSP[0][0], distTo[TSP[0][0]]);
+        while (!pq.isEmpty()) {
+            int v = pq.delMin();
+           // for (Node e : nodeArray[v]){
+           //     relax(e);
+           // }    
+        }
+        
+        assert check(nodeArray, TSP[0][0]);
+        
+        for (int t = 0; t < Connections; t++) {
+            if (hasPathTo(t)) {
+                System.out.printf("%d to %d (%.2f)  ", TSP[0][0], t, distTo(t));
+                if (hasPathTo(t)) {
+                    for (Node e : pathTo(t)) {
+                        System.out.print(e + "   ");
+                    }
+                }
+                StdOut.println();
+            }
+            else {
+                StdOut.printf("%d to %d         no path\n", TSP[0][0], t);
+            }
+        }
         
         
-
+        
     }
 
 
@@ -78,16 +104,10 @@ public class DeclanCiaranDijkstra {
         //Scanner scan = new Scanner(new File("Points.txt"));
 
         String workingDir = System.getProperty("user.dir");
-<<<<<<< HEAD
         //System.out.println(workingDir);
         Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\Points.txt"));
         //Scanner scan = new Scanner(new File("Points.txt"));
         //Scanner scan = new Scanner(new In("Points.txt"));
-=======
-        System.out.println(workingDir);
-        //Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\DensePoints.txt"));
-        Scanner scan = new Scanner(new File("Points.txt"));
->>>>>>> origin/master
         GraphType = scan.next().charAt(0);
         Connections = scan.nextInt();
         //int[] nodex = new int[Connections];
@@ -107,17 +127,9 @@ public class DeclanCiaranDijkstra {
             NodeWeight = scan.nextInt();
             distance[i] = NodeWeight;
             i++;
-<<<<<<< HEAD
 
 		}
 
-=======
-
-
-
-		}
-
->>>>>>> origin/master
         System.out.println(GraphType);
         System.out.println(Connections);
        // for(int j=0; j<Connections;j++){
@@ -145,7 +157,6 @@ public class DeclanCiaranDijkstra {
 					distance[f-1] = check[2];
 
 				} // end of if
-<<<<<<< HEAD
                                 
 			} // end of for
 		}
@@ -155,12 +166,34 @@ public class DeclanCiaranDijkstra {
             //int s = TSP[0][0];
             //System.out.println("G = "+G);
 	} // end of readfile
+    public static double distTo(int x){
+        return distTo[x];
+    }
+    public static boolean hasPathTo(int x){
+        return distTo[x]<Double.POSITIVE_INFINITY;
+    }
+    
+    public static Iterable<Node> pathTo(int v) {
+        if (!hasPathTo(v)) return null;
+        Stack<Node> path = new Stack<Node>();
+        for (Node e = edgeTo[v]; e != null; e = edgeTo[e.from()]) {
+            path.push(e);
+        }
+        return path;
+    }
+    
+    public static void relax(Node e) {
+        int v = e.from(), w = e.to();
+        if (distTo[w] > distTo[v] + e.weight()) {
+            distTo[w] = distTo[v] + e.weight();
+            edgeTo[w] = e;
+            if (pq.contains(w)) pq.change(w, distTo[w]);
+            else                pq.insert(w, distTo[w]);
+        }
+    }
+    
+    public Iterable<Node> adj(int v) {
+        return adj[v];
+    }
 
 } // end of class
-=======
-			} // end of for
-		}
-	} // end of readfile
-
-} // end of class
->>>>>>> origin/master
