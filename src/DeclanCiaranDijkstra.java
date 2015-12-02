@@ -28,7 +28,7 @@ public class DeclanCiaranDijkstra {
         	System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
         }
         //EdgeWeightedDigraph G; 
-        //    G = new EdgeWeightedDigraph(new In("point.txt"));
+        //G = new EdgeWeightedDigraph(new In("point.txt"));
        /*
         adj = (Bag<DirectedEdge>[]) new Bag[Connections];
         for(int i = 0;i<Connections;i++){
@@ -62,33 +62,36 @@ public class DeclanCiaranDijkstra {
         for (int v = 0; v < Connections; v++){
             distTo[v] = Double.POSITIVE_INFINITY;
         }
-        //distTo[TSP[0][0]] = 0.0;
-        distTo[TSP[0][0]-1] = 0.0;
-        System.out.print("Test "+distTo[TSP[0][0]-1]);
+        
+        distTo[TSP[0][0]] = 0.0;
+        //distTo[TSP[0][0]-1] = 0.0;
+       // System.out.print("Test "+distTo[TSP[0][0]-1]);
         
         pq = new IndexMinPQ<Double>(Connections);
         pq.insert(TSP[0][0], distTo[TSP[0][0]]);
         while (!pq.isEmpty()) {
             int v = pq.delMin();
-           // for (Node e : nodeArray[v]){
-           //     relax(e);
-           // }    
+           // for (Node e : adj(v)){
+            for(int q = 0; q<Connections;q++){ 
+                //System.out.println("Test"+q);
+            relax(nodeArray[q]);
+            }    
         }
         
-        assert check(nodeArray, TSP[0][0]);
+       // assert check(nodeArray, TSP[0][0]);
         
         for (int t = 0; t < Connections; t++) {
             if (hasPathTo(t)) {
                 System.out.printf("%d to %d (%.2f)  ", TSP[0][0], t, distTo(t));
                 if (hasPathTo(t)) {
                     for (Node e : pathTo(t)) {
-                        System.out.print(e + "   ");
+                        System.out.print(e.vertex + "->"+e.vertex2 +" : "+e.distance+"   ");
                     }
                 }
                 StdOut.println();
             }
             else {
-                StdOut.printf("%d to %d         no path\n", TSP[0][0], t);
+                //StdOut.printf("%d to %d         no path\n", TSP[0][0], t);
             }
         }
         
@@ -105,7 +108,7 @@ public class DeclanCiaranDijkstra {
 
         String workingDir = System.getProperty("user.dir");
         //System.out.println(workingDir);
-        Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\Points.txt"));
+        Scanner scan = new Scanner(new File(workingDir+"\\src\\ReadFile\\1000Point.txt"));
         //Scanner scan = new Scanner(new File("Points.txt"));
         //Scanner scan = new Scanner(new In("Points.txt"));
         GraphType = scan.next().charAt(0);
@@ -195,5 +198,62 @@ public class DeclanCiaranDijkstra {
     public Iterable<Node> adj(int v) {
         return adj[v];
     }
+ /*   
+    boolean check(EdgeWeightedDigraph G, int s) {
 
+        // check that edge weights are nonnegative
+        for (Node e : edges()) {
+            if (e.weight() < 0) {
+                System.err.println("negative edge weight detected");
+                return false;
+            }
+        }
+
+        // check that distTo[v] and edgeTo[v] are consistent
+        if (distTo[s] != 0.0 || edgeTo[s] != null) {
+            System.err.println("distTo[s] and edgeTo[s] inconsistent");
+            return false;
+        }
+        for (int v = 0; v < G.V(); v++) {
+            if (v == s) continue;
+            if (edgeTo[v] == null && distTo[v] != Double.POSITIVE_INFINITY) {
+                System.err.println("distTo[] and edgeTo[] inconsistent");
+                return false;
+            }
+        }
+
+        // check that all edges e = v->w satisfy distTo[w] <= distTo[v] + e.weight()
+        for (int v = 0; v < G.V(); v++) {
+            for (DirectedEdge e : G.adj(v)) {
+                int w = e.to();
+                if (distTo[v] + e.weight() < distTo[w]) {
+                    System.err.println("edge " + e + " not relaxed");
+                    return false;
+                }
+            }
+        }
+
+        // check that all edges e = v->w on SPT satisfy distTo[w] == distTo[v] + e.weight()
+        for (int w = 0; w < G.V(); w++) {
+            if (edgeTo[w] == null) continue;
+            Node e = edgeTo[w];
+            int v = e.from();
+            if (w != e.to()) return false;
+            if (distTo[v] + e.weight() != distTo[w]) {
+                System.err.println("edge " + e + " on shortest path not tight");
+                return false;
+            }
+        }
+        return true;
+    }
+    public Iterable<DirectedEdge> edges() {
+        Bag<DirectedEdge> list = new Bag<DirectedEdge>();
+        for (int v = 0; v < Connections; v++) {
+            for (Node e : adj(v)) {
+                list.add(e);
+            }
+        }
+        return list;
+    } 
+*/
 } // end of class

@@ -1,8 +1,8 @@
 public class Node {
 
-    private int vertex;
-    private int distance;
-    private int vertex2;
+     int vertex;
+    int distance;
+    int vertex2;
 
     public Node(int a,int b,int c) {
         vertex = a;
