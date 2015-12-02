@@ -20,9 +20,9 @@ public class FileMaker {
 
 		for(count = 0; count < n;) {
 			ignore = false;
-			x = RNG.nextInt(1000)+1;
-			y = RNG.nextInt(1000)+1;
-			z = RNG.nextInt(1000)+1;
+			x = RNG.nextInt(1000);
+			y = RNG.nextInt(1000);
+			z = RNG.nextInt(1000);
 
 			System.out.println(x + "\t" + y + "\t" + z);
 
