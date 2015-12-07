@@ -21,37 +21,38 @@ public class DeclanCiaranDijkstra {
 
 
     public static void main(String[]args)throws FileNotFoundException{
-    	    
+
         readFile();//cals readfile() method below
         for(int j=0; j<Connections;j++){
                 //prints vertex1, vertex2 and the distance
         	System.out.println(TSP[j][0]+" "+TSP[j][1]+" "+distance[j]);
         }//end of for
-        
+
         Node[] nodeArray = new Node[Connections];
         for(int k = 0; k < Connections; k++){
             //assigns nodes to the node array
 	    nodeArray[k] = new Node(TSP[k][0],TSP[k][1],distance[k]);
 	}//end of for
-                        
+
         //Start algorithm
         distTo = new double[Connections];
         edgeTo = new Node[Connections];
         for (int v = 0; v < Connections; v++){
             distTo[v] = Double.POSITIVE_INFINITY;
         }
-        
+
         distTo[TSP[0][0]] = 0.0;
-        
+
         pq = new IndexMinPQ<Double>(Connections);
         pq.insert(TSP[0][0], distTo[TSP[0][0]]);
         while (!pq.isEmpty()) {
             int v = pq.delMin();
-            for(int q = 0; q<Connections;q++){ 
+            for(int q = 0; q<Connections;q++){
                 relax(nodeArray[q]);
-            }//end of for    
+            }//end of for
         }//end of while
-        
+
+                        PrintWriter pw = new PrintWriter("output.txt");
         for (int t = 0; t < Connections; t++) {
             if (hasPathTo(t)) {
                 System.out.printf("%d to %d (%.2f)  ", TSP[0][0], t, distTo(t));
@@ -59,11 +60,14 @@ public class DeclanCiaranDijkstra {
                     for (Node e : pathTo(t)) {
                         //prints out the vertex1 to vertex2 along with the distance
                         System.out.print(e.vertex + "->"+e.vertex2 +" : "+e.distance+"   ");
+                        pw.print(e.vertex + "->"+e.vertex2 +" : "+e.distance+"   ");
+
                     }//end of for
                 }//end of if
-                StdOut.println();
+                System.out.println();
+                pw.println();
             }//end of if
-        }//end of for   
+        }//end of for
     }//end of main
 
 
@@ -98,7 +102,7 @@ public class DeclanCiaranDijkstra {
         //prints out the type of graph and the number of connections
         System.out.println(GraphType);
         System.out.println(Connections);
-        
+
         //sorts the array
 	int[] check = new int[3];
 	for(int e = 0; e < Connections; e++){
@@ -115,20 +119,20 @@ public class DeclanCiaranDijkstra {
 		    TSP[f-1][0] = check[0];
 		    TSP[f-1][1] = check[1];
 		    distance[f-1] = check[2];
-		} // end of if         
+		} // end of if
 	    } // end of for
 	}//end of for
         scan.close();
-          
+
     } // end of readfile
-    
+
     public static double distTo(int x){
         return distTo[x];
     }//end of distTo
     public static boolean hasPathTo(int x){
         return distTo[x]<Double.POSITIVE_INFINITY;
     }//end of hasPathTo
-    
+
     public static Iterable<Node> pathTo(int v) {
         if (!hasPathTo(v)) return null;
         Stack<Node> path = new Stack<Node>();
@@ -137,7 +141,7 @@ public class DeclanCiaranDijkstra {
         }
         return path;
     }//end of path
-    
+
     public static void relax(Node e) {
         int v = e.from(), w = e.to();
         if (distTo[w] > distTo[v] + e.weight()) {
@@ -147,7 +151,7 @@ public class DeclanCiaranDijkstra {
             else                pq.insert(w, distTo[w]);
         }//end of if
     }//end of relax
-    
+
     public Iterable<Node> adj(int v) {
         return adj[v];
     }//end of adj
